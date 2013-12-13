@@ -42,7 +42,9 @@
 	 ((_pa) & 0xFF))
 
 #ifdef CONFIG_CPU_FREQ_GOV_SLIM
+#ifdef CONFIG_CPU_FREQ_GOV_ELEMENTALX
 extern int graphics_boost;
+#endif
 #endif
 
 enum kgsl_iommu_context_id {
