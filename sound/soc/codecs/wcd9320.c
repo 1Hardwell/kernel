@@ -7450,11 +7450,6 @@ static int taiko_codec_probe(struct snd_soc_codec *codec)
 	mutex_unlock(&dapm->codec->mutex);
 
 	codec->ignore_pmdown_time = 1;
-/* OPPO 2013-11-12 xuzhaoan Add begin for America Headset Detect */
-#ifdef CONFIG_MACH_MSM8974_14001
-    priv_headset_type = taiko;
-#endif
-/* OPPO 2013-11-12 xuzhaoan Add end */
 
 	/*
 	 * Get the default values during probe
