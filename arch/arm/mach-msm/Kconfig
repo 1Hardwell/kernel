@@ -3048,7 +3048,8 @@ config MSM_SECBOOT
 	default n
 	bool "MSM Secboot verification driver"
 	help
-	Driver to expose secureboot status
+	Faster memcpy performance for Krait
+
 endif
 
 config KERNEL_TEXT_MPU_PROT
