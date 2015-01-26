@@ -17,6 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+
 #include <linux/atomic.h>
 #include <linux/types.h>
 #include <linux/errno.h>
@@ -146,6 +148,96 @@ static struct kmsg_dumper pstore_dumper = {
 	.dump = pstore_dump,
 };
 
+
+/* Export function to save device specific power up
+ * data
+ *
+ */
+
+int  pstore_annotate(const char *buf)
+{
+	unsigned cnt = strlen(buf);
+	const char *end = buf + cnt;
+
+	while (buf < end) {
+		unsigned long flags;
+		int ret;
+		u64 id;
+
+		if (cnt > psinfo->bufsize)
+			cnt = psinfo->bufsize;
+
+		if (oops_in_progress) {
+			if (!spin_trylock_irqsave(&psinfo->buf_lock, flags))
+				break;
+		} else {
+			spin_lock_irqsave(&psinfo->buf_lock, flags);
+		}
+		memcpy(psinfo->buf, buf, cnt);
+		ret = psinfo->write(PSTORE_TYPE_ANNOTATE, 0, &id, 0, 0,
+			cnt, psinfo);
+		spin_unlock_irqrestore(&psinfo->buf_lock, flags);
+
+		pr_debug("ret %d wrote bytes %d\n", ret, cnt);
+		buf += cnt;
+		cnt = end - buf;
+	}
+
+	return 0;
+
+}
+EXPORT_SYMBOL_GPL(pstore_annotate);
+
+
+#ifdef CONFIG_PSTORE_CONSOLE
+static void pstore_console_write(struct console *con, const char *s, unsigned c)
+{
+	const char *e = s + c;
+
+	while (s < e) {
+		unsigned long flags;
+		u64 id;
+
+		if (c > psinfo->bufsize)
+			c = psinfo->bufsize;
+
+		if (oops_in_progress) {
+			if (!spin_trylock_irqsave(&psinfo->buf_lock, flags))
+				break;
+		} else {
+			spin_lock_irqsave(&psinfo->buf_lock, flags);
+		}
+		memcpy(psinfo->buf, s, c);
+		psinfo->write(PSTORE_TYPE_CONSOLE, 0, &id, 0, 0, c, psinfo);
+		spin_unlock_irqrestore(&psinfo->buf_lock, flags);
+		s += c;
+		c = e - s;
+	}
+}
+
+static struct console pstore_console = {
+	.name	= "pstore",
+	.write	= pstore_console_write,
+	.flags	= CON_PRINTBUFFER | CON_ENABLED | CON_ANYTIME,
+	.index	= -1,
+};
+
+static void pstore_register_console(void)
+{
+	register_console(&pstore_console);
+}
+#else
+static void pstore_register_console(void) {}
+#endif
+
+static int pstore_write_compat(enum pstore_type_id type,
+			       enum kmsg_dump_reason reason,
+			       u64 *id, unsigned int part, int count,
+			       size_t size, struct pstore_info *psi)
+{
+	return psi->write_buf(type, reason, id, part, psinfo->buf, size, psi);
+}
+
 /*
  * platform specific persistent storage driver registers with
  * us here. If pstore is already mounted, call the platform
@@ -184,8 +276,12 @@ int pstore_register(struct pstore_info *psi)
 
 	kmsg_dump_register(&pstore_dumper);
 
-	pstore_timer.expires = jiffies + PSTORE_INTERVAL;
-	add_timer(&pstore_timer);
+	if (pstore_update_ms >= 0) {
+		pstore_timer.expires = jiffies +
+			msecs_to_jiffies(pstore_update_ms);
+		add_timer(&pstore_timer);
+	}
+	pr_info("psi registered\n");
 
 	return 0;
 }
@@ -221,6 +317,7 @@ void pstore_get_records(int quiet)
 		buf = NULL;
 		if (rc && (rc != -EEXIST || !quiet))
 			failed++;
+		pr_info("Found record type %d, psi name %s\n", type, psi->name);
 	}
 	if (psi->close)
 		psi->close(psi);
