@@ -26,7 +26,7 @@ static struct delayed_work suspend_work;
 static struct workqueue_struct *susp_wq;
 struct work_struct resume_work;
 bool state_suspended;
-bool use_fb_notifier = DEFAULT_USE_FB_NOTIFIER;
+bool use_fb_notifier = true;
 module_param_named(use_fb_notifier, use_fb_notifier, bool, 0664);
 
 static BLOCKING_NOTIFIER_HEAD(state_notifier_list);
