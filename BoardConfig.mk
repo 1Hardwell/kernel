@@ -177,6 +177,9 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_ham
 TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
+# Releasetools firmware
+ADD_RADIO_FILES := true
+
 # Use HW crypto for ODE
 TARGET_HW_DISK_ENCRYPTION := true
 
