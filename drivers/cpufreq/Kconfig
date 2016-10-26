@@ -352,6 +352,14 @@ config CPU_FREQ_GOV_ONDEMANDPLUS
 	tristate "'ondemandplus' cpufreq governor"
 	depends on CPU_FREQ	  
 
+config CPU_FREQ_GOV_ALUCARD
+	tristate "'alucard' cpufreq governor"
+	depends on CPU_FREQ
+
+config CPU_FREQ_GOV_DYNAMIC_INTERACTIVE
+	tristate "'dynamic_interactive' cpufreq governor"
+	depends on CPU_FREQ	
+
 config CPU_FREQ_GOV_YANKACTIVE
 	  tristate "'yankactive' cpufreq policy governor"
 	  help
