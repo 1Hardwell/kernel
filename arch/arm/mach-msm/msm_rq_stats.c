@@ -82,19 +82,12 @@ static int update_average_load(unsigned int freq, unsigned int cpu)
 	unsigned int cur_load, load_at_max_freq;
 
 	cur_idle_time = get_cpu_idle_time(cpu, &cur_wall_time, 0);
-	cur_iowait_time = get_cpu_iowait_time(cpu, &cur_wall_time);
-
+	
 	wall_time = (unsigned int) (cur_wall_time - pcpu->prev_cpu_wall);
 	pcpu->prev_cpu_wall = cur_wall_time;
 
 	idle_time = (unsigned int) (cur_idle_time - pcpu->prev_cpu_idle);
 	pcpu->prev_cpu_idle = cur_idle_time;
-
-	iowait_time = (unsigned int) (cur_iowait_time - pcpu->prev_cpu_iowait);
-	pcpu->prev_cpu_iowait = cur_iowait_time;
-
-	if (idle_time >= iowait_time)
-		idle_time -= iowait_time;
 
 	if (unlikely(wall_time <= 0 || wall_time < idle_time))
 		return 0;
