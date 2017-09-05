@@ -495,7 +495,7 @@ int ieee80211_key_link(struct ieee80211_key *key,
 	 * new version of the key to avoid nonce reuse or replay issues.
 	 */
 	if (old_key && key->conf.keylen == old_key->conf.keylen &&
-	    !crypto_memneq(key->conf.key, old_key->conf.key, key->conf.keylen)) {
+	    !memcmp(key->conf.key, old_key->conf.key, key->conf.keylen)) {
 		ieee80211_key_free_unused(key);
 		ret = 0;
 		goto out;
