@@ -128,6 +128,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/sap.conf:system/etc/sap.conf
 #    $(LOCAL_PATH)/gps/flp.conf:system/etc/flp.conf \
 
+# HIDL manifest
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/manifest.xml:system/vendor/manifest.xml
+
 # Lights
 PRODUCT_PACKAGES += \
     lights.msm8974
