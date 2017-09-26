@@ -1,1 +1,5 @@
 allow init system_file:file mounton;
+
+# required for LD_SHIM_LIBS
+allow init { domain -lmkd -crash_dump }:process noatsecure;
+
