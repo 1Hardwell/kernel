@@ -10,5 +10,11 @@
     "repository":  "sb6596/android_proprietary_vendor_zuk",
     "target_path": "vendor/zuk",
     "branch":      "8.x-new"
+  },
+  {
+    "remote":      "github",
+    "repository":  "sb6596/platform_packages_resources_devicesettings",
+    "target_path": "packages/resources/devicesettings",
+    "branch":      "staging/lineage-15.1"
   }
 ]

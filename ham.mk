@@ -106,7 +106,6 @@ PRODUCT_PACKAGES += \
 # Camera
 PRODUCT_PACKAGES += \
     camera.msm8974 \
-    Camera2 \
     Snap
 
 # Charger
@@ -141,10 +140,10 @@ PRODUCT_PACKAGES += \
     gps.msm8974
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/gps/gps.conf:system/etc/gps.conf \
-    $(LOCAL_PATH)/gps/izat.conf:system/etc/izat.conf \
-    $(LOCAL_PATH)/gps/sap.conf:system/etc/sap.conf \
-    $(LOCAL_PATH)/gps/flp.conf:system/etc/flp.conf
+    $(LOCAL_PATH)/gps/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf \
+    $(LOCAL_PATH)/gps/izat.conf:$(TARGET_COPY_OUT_VENDOR)/etc/izat.conf \
+    $(LOCAL_PATH)/gps/sap.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sap.conf \
+    $(LOCAL_PATH)/gps/flp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/flp.conf
 
 # HIDL
 $(call inherit-product, $(LOCAL_PATH)/hidl.mk)

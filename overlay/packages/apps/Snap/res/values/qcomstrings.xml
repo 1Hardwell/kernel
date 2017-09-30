@@ -21,5 +21,12 @@
 -->
 <resources>
     <!-- HDR needs 1x frame -->
+
+    <!-- Opens back camera using openLegacy() -->
+    <bool name="back_camera_open_legacy">true</bool>
+
+    <!-- Opens front camera using openLegacy() -->
+    <bool name="front_camera_open_legacy">true</bool>
+
     <string name="pref_camera_hdr_need_1x_default" translatable="false">false</string>
 </resources>

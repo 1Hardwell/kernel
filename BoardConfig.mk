@@ -123,6 +123,7 @@ HAVE_ADRENO_SOURCE		 	:= false
 NUM_FRAMEBUFFER_SURFACE_BUFFERS  	:= 3
 TARGET_USES_HWC2 		 	:= true
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS  := true
+SF_START_GRAPHICS_ALLOCATOR_SERVICE 	:= true
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
@@ -135,7 +136,8 @@ MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
 
 # HIDL
-DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
+DEVICE_MANIFEST_FILE 	:= $(DEVICE_PATH)/manifest.xml
+DEVICE_MATRIX_FILE 	:= $(DEVICE_PATH)/compatibility_matrix.xml
 
 #HWUI
 HWUI_COMPILE_FOR_PERF := true
@@ -157,8 +159,8 @@ TARGET_USES_QCOM_WCNSS_QMI       := true
 TARGET_USES_WCNSS_MAC_ADDR_REV   := true
 
 # Wifi - EAP-SIM
-#CONFIG_EAP_PROXY                 := qmi
-#CONFIG_EAP_PROXY_DUAL_SIM        := true
+CONFIG_EAP_PROXY                 := dummy
+CONFIG_EAP_PROXY_DUAL_SIM        := true
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 		:= true
