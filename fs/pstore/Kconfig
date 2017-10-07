@@ -47,7 +47,7 @@ config PSTORE
  	  Note that for historical reasons, the module will be named
   	  "ramoops.ko".
   
-          For more information, see Documentation/ramoops.txt.
+        For more information, see Documentation/ramoops.txt.
 
 config PSTORE_RAM_ANNOTATION_APPEND
 	bool "Allow appending messages to pstore ram annotation"
