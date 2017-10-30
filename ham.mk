@@ -154,10 +154,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
 
 # Media
- PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     libc2dcolorconvert \
-    libdivxdrmdecrypt \
-    libdashplayer \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxCore \
@@ -166,8 +164,7 @@ PRODUCT_COPY_FILES += \
     libOmxVdec \
     libOmxVdecHevc \
     libOmxVenc \
-    libstagefrighthw \
-    qcmediaplayer
+    libstagefrighthw
 
 # Power
 PRODUCT_PACKAGES += \
