@@ -143,8 +143,8 @@ TARGET_USES_QCOM_WCNSS_QMI       := true
 TARGET_USES_WCNSS_MAC_ADDR_REV   := true
 
 # Wifi - EAP-SIM
-CONFIG_EAP_PROXY                 := qmi
-CONFIG_EAP_PROXY_DUAL_SIM        := true
+#CONFIG_EAP_PROXY                 := qmi
+#CONFIG_EAP_PROXY_DUAL_SIM        := true
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -180,7 +180,7 @@ TARGET_RIL_VARIANT := caf
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 
 # Releasetools
-TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_ham
+#TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_ham
 TARGET_RELEASETOOLS_EXTENSIONS := $(DEVICE_PATH)
 
 # Releasetools firmware
