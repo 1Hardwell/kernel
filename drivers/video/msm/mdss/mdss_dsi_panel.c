@@ -21,6 +21,7 @@
 #include <linux/leds.h>
 #include <linux/qpnp/pwm.h>
 #include <linux/err.h>
+#include <linux/display_state.h>
 
 #include "mdss_dsi.h"
 #include "mdss_livedisplay.h"
@@ -28,6 +29,13 @@
 #define DT_CMD_HDR 6
 
 #define MIN_REFRESH_RATE 30
+
+bool display_on = true;
+
+bool is_display_on()
+{
+	return display_on;
+}
 
 DEFINE_LED_TRIGGER(bl_led_trigger);
 
@@ -464,6 +472,8 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 		return -EINVAL;
 	}
 
+	display_on = true;
+
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
 	mipi  = &pdata->panel_info.mipi;
@@ -488,6 +498,8 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 		pr_err("%s: Invalid input data\n", __func__);
 		return -EINVAL;
 	}
+
+	display_on = false;
 
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
