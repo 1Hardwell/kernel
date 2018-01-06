@@ -41,9 +41,7 @@
 #include "wcd9xxx-resmgr.h"
 #include "wcd9xxx-common.h"
 #include "wcdcal-hwdep.h"
-#ifdef CONFIG_BOEFFLA_SOUND
-#include "boeffla_sound.h"
-#endif
+
 
 #define TAIKO_MAD_SLIMBUS_TX_PORT 12
 #define TAIKO_MAD_AUDIO_FIRMWARE_PATH "wcd9320/wcd9320_mad_audio.bin"
@@ -4395,13 +4393,8 @@ static int taiko_volatile(struct snd_soc_codec *ssc, unsigned int reg)
 	return 0;
 }
 
-#ifdef CONFIG_BOEFFLA_SOUND
-int taiko_write(struct snd_soc_codec *codec, unsigned int reg,
-	unsigned int value)
-#else
 static int taiko_write(struct snd_soc_codec *codec, unsigned int reg,
 	unsigned int value)
-#endif	
 {
 	int ret;
 	struct wcd9xxx *wcd9xxx = codec->control_data;
@@ -4410,11 +4403,6 @@ static int taiko_write(struct snd_soc_codec *codec, unsigned int reg,
 		return 0;
 
 	BUG_ON(reg > TAIKO_MAX_REGISTER);
-	
-#ifdef CONFIG_BOEFFLA_SOUND
-	// Boeffla Sound write hook
-	value = boeffla_sound_hook_taiko_write(reg, value);
-#endif
 
 	if (!taiko_volatile(codec, reg)) {
 		ret = snd_soc_cache_write(codec, reg, value);
@@ -4425,41 +4413,8 @@ static int taiko_write(struct snd_soc_codec *codec, unsigned int reg,
 
 	return wcd9xxx_reg_write(&wcd9xxx->core_res, reg, value);
 }
-#ifdef CONFIG_BOEFFLA_SOUND
-EXPORT_SYMBOL(taiko_write);
-#endif
-
-#ifdef CONFIG_BOEFFLA_SOUND
-int taiko_write_no_hook(struct snd_soc_codec *codec, unsigned int reg,
-	unsigned int value)
-{
-	int ret;
-	struct wcd9xxx *wcd9xxx = codec->control_data;
-
-	if (reg == SND_SOC_NOPM)
-		return 0;
-
-	BUG_ON(reg > TAIKO_MAX_REGISTER);
-	
-	if (!taiko_volatile(codec, reg)) {
-		ret = snd_soc_cache_write(codec, reg, value);
-		if (ret != 0)
-			dev_err(codec->dev, "Cache write to %x failed: %d\n",
-				reg, ret);
-	}
-
-	return wcd9xxx_reg_write(&wcd9xxx->core_res, reg, value);
-}
-EXPORT_SYMBOL(taiko_write_no_hook);
-#endif
-
-#ifdef CONFIG_BOEFFLA_SOUND
-unsigned int taiko_read(struct snd_soc_codec *codec,
-				unsigned int reg)
-#else
 static unsigned int taiko_read(struct snd_soc_codec *codec,
 				unsigned int reg)
-#endif
 {
 	unsigned int val;
 	int ret;
@@ -4484,9 +4439,6 @@ static unsigned int taiko_read(struct snd_soc_codec *codec,
 	val = wcd9xxx_reg_read(&wcd9xxx->core_res, reg);
 	return val;
 }
-#ifdef CONFIG_BOEFFLA_SOUND
-EXPORT_SYMBOL(taiko_read);
-#endif
 
 static int taiko_startup(struct snd_pcm_substream *substream,
 		struct snd_soc_dai *dai)
@@ -7393,11 +7345,7 @@ static int taiko_codec_probe(struct snd_soc_codec *codec)
 	mutex_unlock(&dapm->codec->mutex);
 
 	codec->ignore_pmdown_time = 1;
-
-#ifdef CONFIG_BOEFFLA_SOUND
-	// Boeffla Sound probe hook
-	boeffla_sound_hook_taiko_codec_probe(codec);
-#endif
+	return ret;
 
 err_irq:
 	taiko_cleanup_irqs(taiko);
