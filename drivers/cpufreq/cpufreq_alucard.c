@@ -16,6 +16,7 @@
  * Created by Alucard_24@xda
  */
 
+#include <asm/cputime.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/init.h>
@@ -59,6 +60,37 @@
 /* sample rate */
 #define MIN_SAMPLING_RATE		10000
 #define SAMPLING_RATE			100000
+
+static inline cputime64_t get_cpu_idle_time_jiffy(unsigned int cpu,
+ 							cputime64_t *wall)
+{
+ 	cputime64_t idle_time;
+ 	cputime64_t cur_wall_time;
+ 	cputime64_t busy_time;
+ 
+ 	cur_wall_time = jiffies64_to_cputime64(get_jiffies_64());
+ 
+ 	busy_time  = kcpustat_cpu(cpu).cpustat[CPUTIME_USER];
+ 	busy_time += kcpustat_cpu(cpu).cpustat[CPUTIME_SYSTEM];
+ 	busy_time += kcpustat_cpu(cpu).cpustat[CPUTIME_IRQ];
+ 	busy_time += kcpustat_cpu(cpu).cpustat[CPUTIME_SOFTIRQ];
+ 	busy_time += kcpustat_cpu(cpu).cpustat[CPUTIME_STEAL];
+ 	busy_time += kcpustat_cpu(cpu).cpustat[CPUTIME_NICE];
+ 	idle_time = (cur_wall_time - busy_time);
+ 	if (wall)
+ 		*wall = (cputime64_t)jiffies_to_usecs(cur_wall_time);
+
+ 	return (cputime64_t)jiffies_to_usecs(idle_time);
+}
+
+static inline cputime64_t get_cpu_idle_time(unsigned int cpu, cputime64_t *wall)
+{
+	u64 idle_time = get_cpu_idle_time_us(cpu, wall);
+
+	if (idle_time == -1ULL)
+  		return get_cpu_idle_time_jiffy(cpu, wall);
+	return idle_time;
+}
 
 static void do_alucard_timer(struct work_struct *work);
 
@@ -527,7 +559,7 @@ static void alucard_check_cpu(struct cpufreq_alucard_cpuinfo *this_alucard_cpuin
 		unsigned int load_freq;
 		int freq_avg;
 		
-		cur_idle_time = get_cpu_idle_time(j, &cur_wall_time, 0);
+		cur_idle_time = get_cpu_idle_time(j, &cur_wall_time);
 
 		wall_time = (unsigned int)
 			(cur_wall_time - j_alucard_cpuinfo->prev_cpu_wall);
@@ -661,7 +693,7 @@ static int cpufreq_governor_alucard(struct cpufreq_policy *policy,
 			struct cpufreq_alucard_cpuinfo *j_alucard_cpuinfo = &per_cpu(od_alucard_cpuinfo, j);
 
 			j_alucard_cpuinfo->prev_cpu_idle = get_cpu_idle_time(j,
-				&j_alucard_cpuinfo->prev_cpu_wall, 0);
+				&j_alucard_cpuinfo->prev_cpu_wall);
 		}
 
 		alucard_enable++;
