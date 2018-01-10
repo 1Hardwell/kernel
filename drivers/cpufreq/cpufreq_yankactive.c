@@ -458,8 +458,7 @@ static void cpufreq_yankactive_timer(unsigned long data)
 	loadadjfreq = (unsigned int)cputime_speedadj * 100;
 	cpu_load = loadadjfreq / pcpu->target_freq;
 	pcpu->prev_load = cpu_load;
-	boosted = boost_val || now < boostpulse_endtime ||
-			check_cpuboost(data);
+	boosted = boost_val || now < boostpulse_endtime;
 #ifdef CONFIG_STATE_NOTIFIER
 	boosted = boosted && !state_suspended;
 #endif
