@@ -14,10 +14,8 @@ obj-$(CONFIG_CPU_FREQ_GOV_SMARTMAX)     += cpufreq_smartmax.o
 obj-$(CONFIG_CPU_FREQ_GOV_YANKACTIVE)   += cpufreq_yankactive.o
 obj-$(CONFIG_CPU_FREQ_GOV_IMPULSE)	+= cpufreq_impulse.o
 obj-$(CONFIG_CPU_FREQ_GOV_INTELLIMM)   	+= cpufreq_intellimm.o
-obj-$(CONFIG_CPU_FREQ_GOV_SLIM)		+= cpufreq_slim.o
 obj-$(CONFIG_CPU_FREQ_GOV_ZZMOOVE)     	+= cpufreq_zzmoove.o
 obj-$(CONFIG_CPU_FREQ_GOV_NIGHTMARE)	+= cpufreq_nightmare.o
-
 obj-$(CONFIG_FINGERPRINT_BOOST)		+= fp-boost.o
 obj-$(CONFIG_CPU_FREQ_GOV_ELEMENTALX)	+= cpufreq_elementalx.o
 
