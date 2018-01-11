@@ -1040,6 +1040,11 @@ config TOUCHSCREEN_GT9XX_SHENQI
 
           If unsure, say N.
 
+config TOUCHSCREEN_DOUBLETAP2WAKE
+	tristate "DoubleTap2Wake for touchscreens"
+	select TOUCHSCREEN_PREVENT_SLEEP
+	default n
+
 
 source "drivers/input/touchscreen/gt9xx/Kconfig"
 source "drivers/input/touchscreen/gt9xx-shenqi/Kconfig"
