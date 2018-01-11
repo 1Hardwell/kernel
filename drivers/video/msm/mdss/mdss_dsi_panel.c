@@ -23,6 +23,10 @@
 #include <linux/err.h>
 #include <linux/display_state.h>
 
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+#include <linux/input/doubletap2wake.h>
+#endif
+
 #include "mdss_dsi.h"
 #include "mdss_livedisplay.h"
 
@@ -472,6 +476,10 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 		return -EINVAL;
 	}
 
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+	dt2w_scr_suspended = false;
+#endif
+
 	display_on = true;
 
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
@@ -498,6 +506,10 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 		pr_err("%s: Invalid input data\n", __func__);
 		return -EINVAL;
 	}
+
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+	dt2w_scr_suspended = true;
+#endif
 
 	display_on = false;
 
