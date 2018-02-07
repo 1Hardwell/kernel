@@ -110,8 +110,8 @@ PRODUCT_PACKAGES += \
     Snap
 
 # Charger
-PRODUCT_PACKAGES += \
-    charger_res_images
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/sbin/chargeonlymode:root/sbin/charger
 
 # ConfigPanel
 PRODUCT_PACKAGES += \

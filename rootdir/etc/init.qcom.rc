@@ -348,9 +348,9 @@ service qseecomd /system/vendor/bin/qseecomd
     user root
     group root
 
-service charger /charger
+service charger /sbin/charger
     class charger
-    critical
+    group system graphics
     seclabel u:r:charger:s0
 
 service hvdcp /system/vendor/bin/hvdcp
@@ -363,17 +363,6 @@ on property:persist.usb.hvdcp.detect=true
 
 on property:persist.usb.hvdcp.detect=false
     stop hvdcp
-
-service qbcharger /charger -m 1
-    disabled
-    oneshot
-    seclabel u:r:healthd:s0
-
-on property:sys.qbcharger.enable=true
-    start qbcharger
-
-on property:sys.qbcharger.enable=false
-    stop qbcharger
 
 service qcamerasvr /system/vendor/bin/mm-qcamera-daemon
     class late_start
