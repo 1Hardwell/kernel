@@ -70,15 +70,16 @@ PRODUCT_PACKAGES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-impl 
+    android.hardware.light@2.0-impl \
+    android.hardware.light@2.0-service 
 
 # OMX
 PRODUCT_PACKAGES += \
-    android.hardware.media.omx
+    android.hardware.media.omx@1.0-impl
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-impl 
+    android.hardware.power@1.1-impl 
 
 # Keymaster
 PRODUCT_PACKAGES += \
@@ -99,7 +100,8 @@ PRODUCT_PACKAGES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-impl
+    android.hardware.vibrator@1.0-impl \
+    android.hardware.vibrator@1.0-service
 
 # Wifi
 PRODUCT_PACKAGES += \
