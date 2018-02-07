@@ -39,8 +39,8 @@ ro.frp.pst=/dev/block/platform/msm_sdcc.1/by-name/frp
 
 # Optimize
 dalvik.vm.boot-dex2oat-threads=8
-dalvik.vm.dex2oat-threads=2
-dalvik.vm.image-dex2oat-threads=4
+dalvik.vm.dex2oat-threads=8
+dalvik.vm.image-dex2oat-threads=8
 
 # Qualcomm® aptX™
 persist.bt.enableAptXHD=true
