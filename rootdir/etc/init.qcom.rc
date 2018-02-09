@@ -348,10 +348,10 @@ service qseecomd /system/vendor/bin/qseecomd
     user root
     group root
 
-service charger /charger
+service charger /sbin/healthd -c
     class charger
     critical
-    seclabel u:r:charger:s0
+    seclabel u:r:healthd:s0
 
 service hvdcp /system/vendor/bin/hvdcp
     class core
