@@ -34,19 +34,9 @@ static int __init proc_cmdline_init(void)
 	 * Remove 'androidboot.verifiedbootstate' flag from command line seen
 	 * by userspace in order to pass SafetyNet CTS check.
 	 */
-	offset_addr = strstr(cmd, "androidboot.verifiedbootstate=");
+	offset_addr = strstr(cmd, "androidboot.bootreason=usb_chg");
 	if (offset_addr) {
-		size_t i, len, offset;
-
-		len = strlen(cmd);
-		offset = offset_addr - cmd;
-
-		for (i = 1; i < (len - offset); i++) {
-			if (cmd[offset + i] == ' ')
-				break;
-		}
-
-		memmove(offset_addr, &cmd[offset + i + 1], len - i - offset);
+		strcat(cmd, " androidboot.mode=charger");
 	}
 
 	proc_create("cmdline", 0, NULL, &cmdline_proc_fops);
