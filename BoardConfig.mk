@@ -96,6 +96,10 @@ TARGET_USES_NON_TREBLE_CAMERA 	:= true
 
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
+BOARD_CHARGER_ENABLE_SUSPEND 	 := true
+BOARD_CHARGING_CMDLINE_NAME  	 := "androidboot.mode"
+BOARD_CHARGING_CMDLINE_VALUE 	 := "usb_chg"
+WITH_LINEAGE_CHARGER 		 := false
 
 # Tap to wake
 TARGET_TAP_TO_WAKE_NODE := /sys/devices/virtual/touch/tp_dev/gesture_on

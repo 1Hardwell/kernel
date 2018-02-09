@@ -113,6 +113,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     charger_res_images
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.enable_boot_charger_mode=1 
+
 # ConfigPanel
 PRODUCT_PACKAGES += \
     ConfigPanel
