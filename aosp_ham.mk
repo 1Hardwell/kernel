@@ -22,16 +22,14 @@ PRODUCT_COPY_FILES += device/zuk/ham/apns-full-conf.xml:system/etc/apns-conf.xml
 # Inherit from ham device
 $(call inherit-product, device/zuk/ham/ham.mk)
 
-# Inherit some common Pissel stuff.
-$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+# Inherit some common AEX stuff.
+$(call inherit-product, vendor/aosp/common.mk)
 
-# Pissel Stuff
-TARGET_ARCH := arm
-TARGET_DENSITY := xxhdpi
+# Boot animation
 TARGET_BOOT_ANIMATION_RES := 1080
 
-# PixelExperience-BuildType
-CUSTOM_BUILD_TYPE := OFFICIAL
+# AospExtended-BuildType
+EXTENDED_BUILD_TYPE := OFFICIAL
 
 PRODUCT_NAME := aosp_ham
 PRODUCT_DEVICE := ham
