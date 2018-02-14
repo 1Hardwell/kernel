@@ -119,10 +119,12 @@ USE_OPENGL_RENDERER 		 	:= true
 TARGET_CONTINUOUS_SPLASH_ENABLED 	:= true
 TARGET_USES_ION 		 	:= true
 OVERRIDE_RS_DRIVER 		 	:= libRSDriver_adreno.so
-HAVE_ADRENO_SOURCE		 	:= false
+BOARD_USES_ADRENO		 	:= true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS  	:= 3
 TARGET_USES_HWC2 		 	:= true
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS  := true
+TARGET_USES_GRALLOC1 			:= true
+SF_START_GRAPHICS_ALLOCATOR_SERVICE 	:= true
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
@@ -158,8 +160,8 @@ TARGET_USES_QCOM_WCNSS_QMI       := true
 TARGET_USES_WCNSS_MAC_ADDR_REV   := true
 
 # Wifi - EAP-SIM
-#CONFIG_EAP_PROXY                 := qmi
-#CONFIG_EAP_PROXY_DUAL_SIM        := true
+CONFIG_EAP_PROXY                 := dummy
+CONFIG_EAP_PROXY_DUAL_SIM        := true
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 		:= true
@@ -183,9 +185,7 @@ USE_DEVICE_SPECIFIC_LOC_API 	:= true
 TARGET_USES_MEDIA_EXTENSIONS := true
 
 # PowerHAL
-TARGET_HAS_LEGACY_POWER_STATS 	:= true
-TARGET_HAS_NO_WIFI_STATS 	:= true
-TARGET_USES_INTERACTION_BOOST 	:= true
+TARGET_POWERHAL_VARIANT := qcom
 
 # QCRIL
 TARGET_RIL_VARIANT := caf

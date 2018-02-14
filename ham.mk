@@ -121,6 +121,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     DeviceSettings
 
+# Lunaverse
+PRODUCT_PACKAGES += \
+    LunaAmbientService
+
 # Fingerprint
 PRODUCT_PACKAGES += \
     fingerprint.msm8974
